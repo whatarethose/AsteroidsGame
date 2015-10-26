@@ -1,17 +1,43 @@
 //your variable declarations here
+SpaceShip spaceship;
 public void setup() 
 {
-  //your code here
+  size(600,600);
+  spaceship = new SpaceShip();
 }
 public void draw() 
 {
-  //your code here
+  spaceship.show();//your code here
 }
-class SpaceShip //extends Floater  
+class SpaceShip extends Floater  
 {   
-    //your code here
-}
-abstract class Floater //Do NOT modify the Floater class! Make changes in the SpaceShip class 
+    public SpaceShip()
+    {
+      corners = 4;
+      int[] xC={-8,16,-8,2};
+      int[] yC={-8,0,-8,0};
+      xCorners=xC;
+      yCorners=yC;
+      myColor=color(255);
+      myCenterX=300;
+      myCenterY=300;
+      myDirectionX=0;
+      myDirectionY=0;
+      myPointDirection=0;
+    }
+    public void setX(int x){myCenterX=x;} 
+    public int getX(){return myCenterX;}
+    public void setY(int y){myCenterY = y;}
+    public int getY(){return myCenterY;}
+    public void setDirectionX(double x){myDirectionX=x;}
+    public double getDirectionX(){return myDirectionX;}
+    public void setDirectionY(double y){myDirectionY=y;}
+    public double getDirectionY(){return myDirectionY;}
+    public void setPointDirection(int degrees){myPointDirection=degrees;}
+    public void getPointDirection(){return myPointDirection;}
+  }
+abstract class Floater //Do NOT modify the Floater class! 
+//Make changes in the SpaceShip class 
 {   
   protected int corners;  //the number of corners, a triangular floater has 3   
   protected int[] xCorners;   
@@ -80,8 +106,10 @@ abstract class Floater //Do NOT modify the Floater class! Make changes in the Sp
     for(int nI = 0; nI < corners; nI++)    
     {     
       //rotate and translate the coordinates of the floater using current direction 
-      xRotatedTranslated = (int)((xCorners[nI]* Math.cos(dRadians)) - (yCorners[nI] * Math.sin(dRadians))+myCenterX);     
-      yRotatedTranslated = (int)((xCorners[nI]* Math.sin(dRadians)) + (yCorners[nI] * Math.cos(dRadians))+myCenterY);      
+      xRotatedTranslated = (int)((xCorners[nI]* Math.cos(dRadians))
+       - (yCorners[nI] * Math.sin(dRadians))+myCenterX);     
+      yRotatedTranslated = (int)((xCorners[nI]* Math.sin(dRadians)) 
+        + (yCorners[nI] * Math.cos(dRadians))+myCenterY);      
       vertex(xRotatedTranslated,yRotatedTranslated);    
     }   
     endShape(CLOSE);  
