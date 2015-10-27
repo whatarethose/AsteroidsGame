@@ -2,20 +2,23 @@
 SpaceShip spaceship;
 public void setup() 
 {
+  
   size(600,600);
   spaceship = new SpaceShip();
 }
 public void draw() 
 {
+  background(0);
   spaceship.show();//your code here
+  spaceship.move();
 }
 class SpaceShip extends Floater  
 {   
     public SpaceShip()
     {
       corners = 4;
-      int[] xC={-8,16,-8,2};
-      int[] yC={-8,0,-8,0};
+      int[] xC={-8,16,-8,-2};
+      int[] yC={-8,0,8,0};
       xCorners=xC;
       yCorners=yC;
       myColor=color(255);
@@ -26,16 +29,39 @@ class SpaceShip extends Floater
       myPointDirection=0;
     }
     public void setX(int x){myCenterX=x;} 
-    public int getX(){return myCenterX;}
-    public void setY(int y){myCenterY = y;}
-    public int getY(){return myCenterY;}
+    public int getX(){return (int)myCenterX;}
+    public void setY(int y){myCenterY=y;}
+    public int getY(){return (int)myCenterY;}
     public void setDirectionX(double x){myDirectionX=x;}
     public double getDirectionX(){return myDirectionX;}
     public void setDirectionY(double y){myDirectionY=y;}
     public double getDirectionY(){return myDirectionY;}
     public void setPointDirection(int degrees){myPointDirection=degrees;}
-    public void getPointDirection(){return myPointDirection;}
-  }
+    public double getPointDirection(){return myPointDirection;}
+}
+public void keyPressed()
+    {
+      if(key == 'a')//rotate left
+      {
+        spaceship.rotate(-4);
+      }
+      else if(key == 'd')//rotate right
+      {
+        spaceship.rotate(4);
+      }
+      else if(key == 'w')//accelarate
+      {
+        spaceship.accelerate(.75);
+      }
+      else if(key == 'g')//hyperspace
+      {
+        spaceship.setDirectionX(0);
+        spaceship.setDirectionY(0);
+        spaceship.setX((int)((Math.random()*600)));
+        spaceship.setY((int)((Math.random()*600)));
+        spaceship.setPointDirection((int)((Math.random()*360)));
+      }
+    }
 abstract class Floater //Do NOT modify the Floater class! 
 //Make changes in the SpaceShip class 
 {   
