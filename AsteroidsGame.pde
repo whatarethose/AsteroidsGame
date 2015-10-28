@@ -1,8 +1,11 @@
 //your variable declarations here
 SpaceShip spaceship;
+boolean left = false;
+boolean right= false;
+boolean up = false;
+boolean down=false;
 public void setup() 
 {
-  
   size(600,600);
   spaceship = new SpaceShip();
 }
@@ -11,6 +14,38 @@ public void draw()
   background(0);
   spaceship.show();//your code here
   spaceship.move();
+  if(keyPressed == true)
+  {
+    if(key=='a')
+    {
+      spaceship.rotate(-3);
+    }
+    if(key=='d')
+    {
+      spaceship.rotate(3);
+    }
+    if(key=='w')
+    {
+      if(spaceship.getDirectionX()>2 || spaceship.getDirectionY()>2)
+      {
+      }
+      else
+      {
+       spaceship.accelerate(.1);
+      }
+    }
+    if(key=='s')
+    {
+      if(spaceship.getDirectionX() <0 || spaceship.getDirectionY()<0)
+      {
+      }
+      else
+      {
+        spaceship.accelerate(-.5);
+      }
+    }
+  }
+  System.out.println(spaceship.getDirectionX());
 }
 class SpaceShip extends Floater  
 {   
@@ -39,29 +74,17 @@ class SpaceShip extends Floater
     public void setPointDirection(int degrees){myPointDirection=degrees;}
     public double getPointDirection(){return myPointDirection;}
 }
-public void keyPressed()
+public void keyReleased()
+  {
+    if(key == 'g')//hyperspace      
     {
-      if(key == 'a')//rotate left
-      {
-        spaceship.rotate(-4);
+      spaceship.setDirectionX(0);
+      spaceship.setDirectionY(0);
+      spaceship.setX((int)((Math.random()*600)));
+      spaceship.setY((int)((Math.random()*600)));
+      spaceship.setPointDirection((int)((Math.random()*360)));
       }
-      else if(key == 'd')//rotate right
-      {
-        spaceship.rotate(4);
-      }
-      else if(key == 'w')//accelarate
-      {
-        spaceship.accelerate(.75);
-      }
-      else if(key == 'g')//hyperspace
-      {
-        spaceship.setDirectionX(0);
-        spaceship.setDirectionY(0);
-        spaceship.setX((int)((Math.random()*600)));
-        spaceship.setY((int)((Math.random()*600)));
-        spaceship.setPointDirection((int)((Math.random()*360)));
-      }
-    }
+  }  
 abstract class Floater //Do NOT modify the Floater class! 
 //Make changes in the SpaceShip class 
 {   
