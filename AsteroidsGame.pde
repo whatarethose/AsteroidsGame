@@ -4,8 +4,14 @@ boolean left = false;
 boolean right= false;
 boolean up = false;
 boolean down=false;
+Stars []star;
 public void setup() 
 {
+  star = new Stars[30];
+  for(int a=0;a<star.length;a++)
+  {
+    star[a]= new Stars();
+  }
   size(600,600);
   spaceship = new SpaceShip();
 }
@@ -14,39 +20,33 @@ public void draw()
   background(0);
   spaceship.show();//your code here
   spaceship.move();
-  if(keyPressed == true)
+   for(int b=0;b<star.length;b++)
   {
-    if(key=='a')
-    {
-      spaceship.rotate(-3);
-    }
-    if(key=='d')
-    {
-      spaceship.rotate(3);
-    }
-    if(key=='w')
-    {
-      if(spaceship.getDirectionX()>2 || spaceship.getDirectionY()>2)
-      {
-      }
-      else
-      {
-       spaceship.accelerate(.1);
-      }
-    }
-    if(key=='s')
-    {
-      if(spaceship.getDirectionX() <0 || spaceship.getDirectionY()<0)
-      {
-      }
-      else
-      {
-        spaceship.accelerate(-.5);
-      }
-    }
+    star[b].show();
   }
-  System.out.println(spaceship.getDirectionX());
+  keyDo();
+  System.out.println(sqrt(pow(spaceship.getDirectionX(),2)+
+    pow((spaceship.getDirectionY(),2))));
 }
+class Stars
+  {
+    private int myX,myY;
+    public Stars()
+    {
+      myX=(int)(Math.random()*600);
+      myY=(int)(Math.random()*600);
+    }
+    public void show()
+    {
+      color(255);
+      fill(255);
+      ellipse(myX,myY,2,2);
+    }
+    public int getX(){return myX;}
+    public void setX(int x){myX=x;}
+    public int getY(){return myY;}
+    public void setY(int y){myY=y;}
+  }
 class SpaceShip extends Floater  
 {   
     public SpaceShip()
@@ -74,8 +74,43 @@ class SpaceShip extends Floater
     public void setPointDirection(int degrees){myPointDirection=degrees;}
     public double getPointDirection(){return myPointDirection;}
 }
+public void keyPressed()
+{
+  if(key=='a')
+  {
+    left= true;
+  }
+  if(key=='d')
+  {
+    right = true;
+  }
+  if(key=='w')
+  {
+    up= true;
+  }
+  if(key=='s')
+  {
+   down=true;
+  }
+}
 public void keyReleased()
   {
+    if(key=='a')
+  {
+    left= false;
+  }
+  if(key=='d')
+  {
+    right = false;
+  }
+  if(key=='w')
+  {
+    up= false;
+  }
+  if(key=='s')
+  {
+   down=false;
+  }
     if(key == 'g')//hyperspace      
     {
       spaceship.setDirectionX(0);
@@ -84,7 +119,28 @@ public void keyReleased()
       spaceship.setY((int)((Math.random()*600)));
       spaceship.setPointDirection((int)((Math.random()*360)));
       }
-  }  
+  }
+public void keyDo()
+{
+  if(left==true)
+  {
+    spaceship.rotate(-3);
+  }
+  if(right==true)
+  {
+    spaceship.rotate(3);
+  }
+  if(up == true)
+  {
+    spaceship.accelerate(.069);
+    color(255,0,0);
+
+  }
+  if(down== true)
+  {
+    spaceship.accelerate(-.069);
+  }
+}  
 abstract class Floater //Do NOT modify the Floater class! 
 //Make changes in the SpaceShip class 
 {   
