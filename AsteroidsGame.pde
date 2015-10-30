@@ -25,8 +25,12 @@ public void draw()
     star[b].show();
   }
   keyDo();
-  System.out.println(sqrt(pow(spaceship.getDirectionX(),2)+
-    pow((spaceship.getDirectionY(),2))));
+  System.out.println(
+    sqrt(
+      pow((int)spaceship.getDirectionX(),2)+
+      pow((int)spaceship.getDirectionY(),2)
+    )
+  );
 }
 class Stars
   {
