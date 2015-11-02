@@ -7,7 +7,7 @@ boolean down=false;
 Stars []star;
 public void setup() 
 {
-  star = new Stars[30];
+  star = new Stars[50];
   for(int a=0;a<star.length;a++)
   {
     star[a]= new Stars();
@@ -77,6 +77,34 @@ class SpaceShip extends Floater
     public double getDirectionY(){return myDirectionY;}
     public void setPointDirection(int degrees){myPointDirection=degrees;}
     public double getPointDirection(){return myPointDirection;}
+    public void move ()   //move the floater in the current direction of travel
+    {      
+    //change the x and y coordinates by myDirectionX and myDirectionY       
+    myCenterX += myDirectionX;    
+    myCenterY += myDirectionY;     
+    if(sqrt(pow((int)myDirectionX,2)+pow((int)myDirectionY,2)) > 15)// use pythagroems theorem to figure out speed
+    {
+       myDirectionX*=.9;
+      myDirectionY*=.9;
+    }
+    //wrap around screen    
+    if(myCenterX >width)
+    {     
+      myCenterX = 0;    
+    }    
+    else if (myCenterX<0)
+    {     
+      myCenterX = width;    
+    }    
+    if(myCenterY >height)
+    {    
+      myCenterY = 0;    
+    }   
+    else if (myCenterY < 0)
+    {     
+      myCenterY = height;    
+    }   
+  }
 }
 public void keyPressed()
 {
