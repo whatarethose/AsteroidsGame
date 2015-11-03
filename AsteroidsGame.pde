@@ -25,12 +25,6 @@ public void draw()
     star[b].show();
   }
   keyDo();
-  System.out.println(
-    sqrt(
-      pow((int)spaceship.getDirectionX(),2)+
-      pow((int)spaceship.getDirectionY(),2)
-    )
-  );
 }
 class Stars
   {
@@ -84,7 +78,7 @@ class SpaceShip extends Floater
     myCenterY += myDirectionY;     
     if(sqrt(pow((int)myDirectionX,2)+pow((int)myDirectionY,2)) > 15)// use pythagroems theorem to figure out speed
     {
-       myDirectionX*=.9;
+      myDirectionX*=.9;
       myDirectionY*=.9;
     }
     //wrap around screen    
@@ -165,8 +159,8 @@ public void keyDo()
   if(up == true)
   {
     spaceship.accelerate(.069);
-    color(255,0,0);
-
+    fill(255,0,0);
+    //ellipse(spaceship.getX()-10,spaceship.getY(),10,10);
   }
   if(down== true)
   {
