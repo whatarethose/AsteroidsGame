@@ -5,6 +5,8 @@ boolean right= false;
 boolean up = false;
 boolean down=false;
 Stars []star;
+boolean thrust = false;
+Propel [] dots;
 public void setup() 
 {
   star = new Stars[50];
@@ -12,9 +14,15 @@ public void setup()
   {
     star[a]= new Stars();
   }
+  dots = new Propel[30];
+  for(int b =0;b<dots.length;b++)
+  {
+    dots[b]=new Propel();
+  }
   size(600,600);
   spaceship = new SpaceShip();
 }
+
 public void draw() 
 {
   background(0);
@@ -24,8 +32,14 @@ public void draw()
   {
     star[b].show();
   }
+  for(int c=0;c<dots.length;c++)
+  {
+    dots[c].show();
+    dots[c].move();
+  }
   keyDo();
 }
+
 class Stars
   {
     private int myX,myY;
@@ -71,33 +85,73 @@ class SpaceShip extends Floater
     public double getDirectionY(){return myDirectionY;}
     public void setPointDirection(int degrees){myPointDirection=degrees;}
     public double getPointDirection(){return myPointDirection;}
-    public void move ()   //move the floater in the current direction of travel
-    {      
-    //change the x and y coordinates by myDirectionX and myDirectionY       
-    myCenterX += myDirectionX;    
-    myCenterY += myDirectionY;     
-    if(sqrt(pow((int)myDirectionX,2)+pow((int)myDirectionY,2)) > 15)// use pythagroems theorem to figure out speed
+}
+class Propel extends Floater
+{
+  private int time;
+  public Propel()
+  {
+    corners = 4;
+    int[] xC={-8,16,-8,-2};
+    int[] yC={-8,0,8,0};
+    xCorners=xC;
+    yCorners=yC;
+    myColor=color(255);
+    myCenterX=-100;
+    myCenterY=-100;
+    myDirectionX=0;
+    myDirectionY=0;
+    myPointDirection=0;
+    time = 0;
+  }
+  public void setX(int x){myCenterX=x;} 
+  public int getX(){return (int)myCenterX;}
+  public void setY(int y){myCenterY=y;}
+  public int getY(){return (int)myCenterY;}
+  public void setDirectionX(double x){myDirectionX=x;}
+  public double getDirectionX(){return myDirectionX;}
+  public void setDirectionY(double y){myDirectionY=y;}
+  public double getDirectionY(){return myDirectionY;}
+  public void setPointDirection(int degrees){myPointDirection=degrees;}
+  public double getPointDirection(){return myPointDirection;}
+  public int getTime(){return time;}
+  public void setTime(int x){time=x;}
+  public void move()
+  {
+    if(thrust && (Math.random() > .9) )//makes the thruster animation
     {
-      myDirectionX*=.9;
-      myDirectionY*=.9;
+      myCenterX=spaceship.getX();
+      myCenterY=spaceship.getY();
+      myPointDirection=spaceship.getPointDirection()-180;
+      myDirectionX=5*(Math.cos(myPointDirection));
+      myDirectionY=5*(Math.sin(myPointDirection));
     }
-    //wrap around screen    
-    if(myCenterX >width)
-    {     
+    else 
+    {
+      myCenterX+=myDirectionX;
+      myCenterY+=myDirectionY;
+    }
+    if(myCenterX >600) //if it goes off the screen then reset it
+    { 
       myCenterX = 0;    
-    }    
-    else if (myCenterX<0)
+    } else if (myCenterX<0) 
     {     
-      myCenterX = width;    
+      myCenterX = 600;    
     }    
-    if(myCenterY >height)
+    if(myCenterY >600) 
     {    
       myCenterY = 0;    
-    }   
-    else if (myCenterY < 0)
+    }  
+    else if (myCenterY < 0) 
     {     
-      myCenterY = height;    
-    }   
+      myCenterY = 600;      
+    }
+    time++;
+  }
+  public void show()
+  {
+    fill(255);
+    ellipse((int)(myCenterX),(int)(myCenterY),5,5);
   }
 }
 public void keyPressed()
@@ -113,6 +167,7 @@ public void keyPressed()
   if(key=='w')
   {
     up= true;
+    thrust=true;
   }
   if(key=='s')
   {
@@ -132,6 +187,7 @@ public void keyReleased()
   if(key=='w')
   {
     up= false;
+    thrust =false;
   }
   if(key=='s')
   {
@@ -159,12 +215,22 @@ public void keyDo()
   if(up == true)
   {
     spaceship.accelerate(.069);
+    if(sqrt(pow((int)spaceship.getDirectionX(),2)+pow((int)spaceship.getDirectionY(),2)) > 15)// use pythagroems theorem to figure out speed
+    {
+      spaceship.setDirectionX(spaceship.getDirectionX()*.9);
+      spaceship.setDirectionY(spaceship.getDirectionY()*.9);
+    }
     fill(255,0,0);
     //ellipse(spaceship.getX()-10,spaceship.getY(),10,10);
   }
   if(down== true)
   {
     spaceship.accelerate(-.069);
+    if(sqrt(pow((int)spaceship.getDirectionX(),2)+pow((int)spaceship.getDirectionY(),2)) > 15)// use pythagroems theorem to figure out speed
+    {
+      spaceship.setDirectionX(spaceship.getDirectionX()*.9);
+      spaceship.setDirectionY(spaceship.getDirectionY()*.9);
+    }
   }
 }  
 abstract class Floater //Do NOT modify the Floater class! 
