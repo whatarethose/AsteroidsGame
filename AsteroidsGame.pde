@@ -14,7 +14,7 @@ public void setup()
   {
     star[a]= new Stars();
   }
-  dots = new Propel[30];
+  dots = new Propel[5];
   for(int b =0;b<dots.length;b++)
   {
     dots[b]=new Propel();
@@ -123,8 +123,9 @@ class Propel extends Floater
       myCenterX=spaceship.getX();
       myCenterY=spaceship.getY();
       myPointDirection=spaceship.getPointDirection()-180;
-      myDirectionX=5*(Math.cos(myPointDirection));
-      myDirectionY=5*(Math.sin(myPointDirection));
+      double newD = (spaceship.getPointDirection()*(Math.PI/180)) + Math.PI;
+      myDirectionX = 5*(Math.cos(newD));
+      myDirectionY = 5*(Math.sin(newD));
     }
     else 
     {
