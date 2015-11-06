@@ -14,7 +14,7 @@ public void setup()
   {
     star[a]= new Stars();
   }
-  dots = new Propel[5];
+  dots = new Propel[5 ];
   for(int b =0;b<dots.length;b++)
   {
     dots[b]=new Propel();
@@ -26,18 +26,19 @@ public void setup()
 public void draw() 
 {
   background(0);
+  for(int c=0;c<dots.length;c++)
+  {
+    dots[c].show();
+    dots[c].move();
+  }
   spaceship.show();//your code here
   spaceship.move();
    for(int b=0;b<star.length;b++)
   {
     star[b].show();
   }
-  for(int c=0;c<dots.length;c++)
-  {
-    dots[c].show();
-    dots[c].move();
-  }
   keyDo();
+  System.out.println(dots[1].getTime());
 }
 
 class Stars
@@ -88,7 +89,8 @@ class SpaceShip extends Floater
 }
 class Propel extends Floater
 {
-  private int time;
+  private int timer;
+  private color myColor;
   public Propel()
   {
     corners = 4;
@@ -102,7 +104,8 @@ class Propel extends Floater
     myDirectionX=0;
     myDirectionY=0;
     myPointDirection=0;
-    time = 0;
+    timer = 0;
+    myColor=150;
   }
   public void setX(int x){myCenterX=x;} 
   public int getX(){return (int)myCenterX;}
@@ -114,8 +117,8 @@ class Propel extends Floater
   public double getDirectionY(){return myDirectionY;}
   public void setPointDirection(int degrees){myPointDirection=degrees;}
   public double getPointDirection(){return myPointDirection;}
-  public int getTime(){return time;}
-  public void setTime(int x){time=x;}
+  public int getTime(){return timer;}
+  public void setTime(int x){timer=x;}
   public void move()
   {
     if(thrust && (Math.random() > .9) )//makes the thruster animation
@@ -123,7 +126,7 @@ class Propel extends Floater
       myCenterX=spaceship.getX();
       myCenterY=spaceship.getY();
       myPointDirection=spaceship.getPointDirection()-180;
-      double newD = (spaceship.getPointDirection()*(Math.PI/180)) + Math.PI;
+      double newD = myPointDirection*(Math.PI/180)+(Math.random()*.8)-.4;
       myDirectionX = 5*(Math.cos(newD));
       myDirectionY = 5*(Math.sin(newD));
     }
@@ -147,12 +150,17 @@ class Propel extends Floater
     {     
       myCenterY = 600;      
     }
-    time++;
+    timer++;
   }
   public void show()
   {
-    fill(255);
+    stroke(0);
+    fill(255,0,0,myColor);
     ellipse((int)(myCenterX),(int)(myCenterY),5,5);
+    // if(myColor>0)
+    // {
+    //   myColor-=1;
+    // }
   }
 }
 public void keyPressed()
