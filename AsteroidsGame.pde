@@ -14,7 +14,7 @@ public void setup()
   {
     star[a]= new Stars();
   }
-  dots = new Propel[5 ];
+  dots = new Propel[10];
   for(int b =0;b<dots.length;b++)
   {
     dots[b]=new Propel();
@@ -105,7 +105,7 @@ class Propel extends Floater
     myDirectionY=0;
     myPointDirection=0;
     timer = 0;
-    myColor=150;
+    myColor=175;
   }
   public void setX(int x){myCenterX=x;} 
   public int getX(){return (int)myCenterX;}
@@ -157,10 +157,18 @@ class Propel extends Floater
     stroke(0);
     fill(255,0,0,myColor);
     ellipse((int)(myCenterX),(int)(myCenterY),5,5);
-    // if(myColor>0)
-    // {
-    //   myColor-=1;
-    // }
+    if(myColor>0)
+    {
+      myColor-=5;
+    }
+    else if(myColor <10)
+    {
+      myDirectionX=0;
+      myDirectionY=0;
+      myCenterX=-1000;
+      myCenterY=-1000;
+      myColor=175;
+    }
   }
 }
 public void keyPressed()
@@ -202,7 +210,7 @@ public void keyReleased()
   {
    down=false;
   }
-    if(key == 'g')//hyperspace      
+    if(key == 'h')//hyperspace      
     {
       spaceship.setDirectionX(0);
       spaceship.setDirectionY(0);
