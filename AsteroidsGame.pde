@@ -7,6 +7,7 @@ boolean down=false;
 Stars []star;
 boolean thrust = false;
 Propel [] dots;
+int fade=0;
 public void setup() 
 {
   star = new Stars[50];
@@ -25,7 +26,7 @@ public void setup()
 
 public void draw() 
 {
-  background(0);
+  background(fade,fade,fade,fade);
   for(int c=0;c<dots.length;c++)
   {
     dots[c].show();
