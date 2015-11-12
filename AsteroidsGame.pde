@@ -14,7 +14,7 @@ public void setup()
   for(int a=0;a<star.length;a++)
   {
     star[a]= new Stars();
-  }
+  } 
   dots = new Propel[10];
   for(int b =0;b<dots.length;b++)
   {
@@ -39,7 +39,6 @@ public void draw()
     star[b].show();
   }
   keyDo();
-  System.out.println(dots[1].getTime());
 }
 
 class Stars
