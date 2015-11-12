@@ -26,7 +26,7 @@ public void setup()
 
 public void draw() 
 {
-  background(fade,fade,fade,fade);
+  background(0,0,0);
   for(int c=0;c<dots.length;c++)
   {
     dots[c].show();
@@ -69,7 +69,7 @@ class SpaceShip extends Floater
       int[] yC={-8,0,8,0};
       xCorners=xC;
       yCorners=yC;
-      myColor=color(255);
+      myColor=255;
       myCenterX=300;
       myCenterY=300;
       myDirectionX=0;
@@ -86,6 +86,8 @@ class SpaceShip extends Floater
     public double getDirectionY(){return myDirectionY;}
     public void setPointDirection(int degrees){myPointDirection=degrees;}
     public double getPointDirection(){return myPointDirection;}
+    public int getColor(){return myColor;}
+    public void setColor(int x){myColor=x;}
 }
 class Propel extends Floater
 {
@@ -105,7 +107,6 @@ class Propel extends Floater
     myDirectionY=0;
     myPointDirection=0;
     timer = 0;
-    myColor=175;
   }
   public void setX(int x){myCenterX=x;} 
   public int getX(){return (int)myCenterX;}
@@ -117,8 +118,8 @@ class Propel extends Floater
   public double getDirectionY(){return myDirectionY;}
   public void setPointDirection(int degrees){myPointDirection=degrees;}
   public double getPointDirection(){return myPointDirection;}
-  public int getTime(){return timer;}
-  public void setTime(int x){timer=x;}
+  public int getColor(){return myColor;}
+  public void setColor(int x){myColor=x;}
   public void move()
   {
     if(thrust && (Math.random() > .9) )//makes the thruster animation
@@ -212,12 +213,18 @@ public void keyReleased()
   }
     if(key == 'h')//hyperspace      
     {
+      spaceship.setColor(spaceship.getColor()-20);
+      if (spaceship.getColor()==0)
+      {
+      spaceship.setColor(color(255));
       spaceship.setDirectionX(0);
       spaceship.setDirectionY(0);
       spaceship.setX((int)((Math.random()*600)));
       spaceship.setY((int)((Math.random()*600)));
       spaceship.setPointDirection((int)((Math.random()*360)));
-      }
+      background(255);
+    }
+    }
   }
 public void keyDo()
 {
@@ -237,8 +244,6 @@ public void keyDo()
       spaceship.setDirectionX(spaceship.getDirectionX()*.9);
       spaceship.setDirectionY(spaceship.getDirectionY()*.9);
     }
-    fill(255,0,0);
-    //ellipse(spaceship.getX()-10,spaceship.getY(),10,10);
   }
   if(down== true)
   {
