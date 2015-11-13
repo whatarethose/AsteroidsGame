@@ -213,17 +213,12 @@ public void keyReleased()
   }
     if(key == 'h')//hyperspace      
     {
-      spaceship.setColor(spaceship.getColor()-20);
-      if (spaceship.getColor()==0)
-      {
-      spaceship.setColor(color(255));
+      background(255);
       spaceship.setDirectionX(0);
       spaceship.setDirectionY(0);
       spaceship.setX((int)((Math.random()*600)));
       spaceship.setY((int)((Math.random()*600)));
       spaceship.setPointDirection((int)((Math.random()*360)));
-      background(255);
-    }
     }
   }
 public void keyDo()
