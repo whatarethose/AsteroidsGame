@@ -7,9 +7,14 @@ boolean down=false;
 Stars []star;
 boolean thrust = false;
 Propel [] dots;
-int fade=0;
+Asteroids[] asteroid;
 public void setup() 
 {
+  asteroid = new Asteroids[1];
+  for(int c=0;c<asteroid.length;c++)
+  {
+    asteroid[c]=new Asteroids();
+  }
   star = new Stars[50];
   for(int a=0;a<star.length;a++)
   {
@@ -38,6 +43,10 @@ public void draw()
   {
     star[b].show();
   }
+  for(int c = 0;c<asteroid.length;c++)
+  {
+    asteroid[c].show();
+  }
   keyDo();
 }
 
@@ -60,6 +69,37 @@ class Stars
     public int getY(){return myY;}
     public void setY(int y){myY=y;}
   }
+class Asteroids extends Floater
+{
+  private int rotSpeed;
+  Asteroids()
+  {
+    corners = 4;
+    int[] xC={-8,16,-8,-2};
+    int[] yC={-8,0,8,0};
+    xCorners=xC;
+    yCorners=yC;
+    myColor=255;
+    myCenterX=(int)(Math.random()*600);
+    myCenterY=(int)(Math.random()*600);
+    myDirectionX=(Math.random()*26)-13;
+    myDirectionY=(Math.random()*26)-13;
+  }
+  public void setX(int x){myCenterX=x;} 
+  public int getX(){return (int)myCenterX;}
+  public void setY(int y){myCenterY=y;}
+  public int getY(){return (int)myCenterY;}
+  public void setDirectionX(double x){myDirectionX=x;}
+  public double getDirectionX(){return myDirectionX;}
+  public void setDirectionY(double y){myDirectionY=y;}
+  public double getDirectionY(){return myDirectionY;}
+  public void setPointDirection(int degrees){myPointDirection=degrees;}
+  public double getPointDirection(){return myPointDirection;}
+  public void move()
+  {
+
+  }
+}
 class SpaceShip extends Floater  
 {   
     public SpaceShip()
