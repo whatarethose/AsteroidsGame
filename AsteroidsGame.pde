@@ -10,7 +10,7 @@ Propel [] dots;
 Asteroids[] asteroid;
 public void setup() 
 {
-  asteroid = new Asteroids[5];
+  asteroid = new Asteroids[10];
   for(int c=0;c<asteroid.length;c++)
   {
     asteroid[c]=new Asteroids();
@@ -82,16 +82,20 @@ class Asteroids extends Floater
   Asteroids()
   {
     corners = 12;
-    int[] xC={makeRanCor(-12),0,12,18,22,18,10,0,-12,-20,-25,-20};
-    int[] yC={makeRanCor(10),16,20,18,14,6,0,-10,-14,-10,0,5,10};
+    int[] xC={makeRanCor(-12),makeRanCor(0),makeRanCor(12),
+      makeRanCor(18),makeRanCor(22),makeRanCor(18),makeRanCor(10)
+      ,makeRanCor(0),makeRanCor(-12),makeRanCor(-20),makeRanCor(-25),makeRanCor(-20)};
+    int[] yC={makeRanCor(10),makeRanCor(16),makeRanCor(20),makeRanCor(18)
+      ,makeRanCor(14),makeRanCor(6),makeRanCor(0),makeRanCor(-10),makeRanCor(-14),makeRanCor(-10)
+      ,makeRanCor(0),makeRanCor(5),makeRanCor(10)};
     xCorners=xC;
     yCorners=yC;
     myColor=255;
     myCenterX=(int)(Math.random()*600);
     myCenterY=(int)(Math.random()*600);
-    myDirectionX=(Math.random()*6)-3;
-    myDirectionY=(Math.random()*6)-3;
-    rotSpeed=(int)(Math.random()*10)-5;
+    myDirectionX=(Math.random()*4)-2;
+    myDirectionY=(Math.random()*4)-2;
+    rotSpeed=(int)(Math.random()*8)-4;
   }
   public void setX(int x){myCenterX=x;} 
   public int getX(){return (int)myCenterX;}
@@ -268,6 +272,7 @@ public void keyReleased()
       spaceship.setX((int)((Math.random()*600)));
       spaceship.setY((int)((Math.random()*600)));
       spaceship.setPointDirection((int)((Math.random()*360)));
+      
     }
   }
 public void keyDo()
