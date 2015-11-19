@@ -8,6 +8,7 @@ Stars []star;
 boolean thrust = false;
 Propel [] dots;
 Asteroids[] asteroid;
+int flash = 255;
 public void setup() 
 {
   asteroid = new Asteroids[10];
@@ -31,7 +32,7 @@ public void setup()
 
 public void draw() 
 {
-  background(0,0,0);
+  background(flash);
   for(int c=0;c<dots.length;c++)
   {
     dots[c].show();
@@ -49,6 +50,14 @@ public void draw()
     asteroid[c].move();
   }
   keyDo();
+  if(flash>0)
+    { 
+      flash = flash - 2;
+      if(flash<0)
+      {
+        flash = 0;
+      }
+    }
 }
 
 class Stars
@@ -266,7 +275,7 @@ public void keyReleased()
   }
     if(key == 'h')//hyperspace      
     {
-      background(255);
+      flash=255;
       spaceship.setDirectionX(0);
       spaceship.setDirectionY(0);
       spaceship.setX((int)((Math.random()*600)));
