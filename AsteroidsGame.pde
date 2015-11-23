@@ -9,6 +9,8 @@ boolean thrust = false;
 Propel [] dots;
 Asteroids[] asteroid;
 int flash = 255;
+float hyperspaceCD = 0;
+String hyperspaceReady;
 public void setup() 
 {
   asteroid = new Asteroids[10];
@@ -58,6 +60,17 @@ public void draw()
         flash = 0;
       }
     }
+  if(hyperspaceCD !=0)
+  {
+    hyperspaceReady= "Not Ready";
+    hyperspaceCD-=1;
+  }
+  else
+  {
+    hyperspaceReady="Ready"; 
+  }
+  textSize(13);
+  text("Hyperspace : " + hyperspaceReady, 10, 10);
 }
 
 class Stars
@@ -91,12 +104,18 @@ class Asteroids extends Floater
   Asteroids()
   {
     corners = 12;
-    int[] xC={makeRanCor(-12),makeRanCor(0),makeRanCor(12),
-      makeRanCor(18),makeRanCor(22),makeRanCor(18),makeRanCor(10)
-      ,makeRanCor(0),makeRanCor(-12),makeRanCor(-20),makeRanCor(-25),makeRanCor(-20)};
-    int[] yC={makeRanCor(10),makeRanCor(16),makeRanCor(20),makeRanCor(18)
-      ,makeRanCor(14),makeRanCor(6),makeRanCor(0),makeRanCor(-10),makeRanCor(-14),makeRanCor(-10)
-      ,makeRanCor(0),makeRanCor(5),makeRanCor(10)};
+    int[] xC=
+    {
+      makeRanCor(-12),makeRanCor(0),makeRanCor(12),
+      makeRanCor(14),makeRanCor(18),makeRanCor(14),makeRanCor(8)
+      ,makeRanCor(0),makeRanCor(-12),makeRanCor(-15),makeRanCor(-18),makeRanCor(-15)
+    };
+    int[] yC=
+    {
+      makeRanCor(10),makeRanCor(16),makeRanCor(20),makeRanCor(18)
+      ,makeRanCor(14),makeRanCor(4),makeRanCor(0),makeRanCor(-10),makeRanCor(-14),makeRanCor(-10)
+      ,makeRanCor(0),makeRanCor(5),makeRanCor(10)
+    };
     xCorners=xC;
     yCorners=yC;
     myColor=255;
@@ -198,21 +217,10 @@ class Propel extends Floater
       myCenterX+=myDirectionX;
       myCenterY+=myDirectionY;
     }
-    if(myCenterX >600) //if it goes off the screen then reset it
-    { 
-      myCenterX = 0;    
-    } else if (myCenterX<0) 
-    {     
-      myCenterX = 600;    
-    }    
-    if(myCenterY >600) 
-    {    
-      myCenterY = 0;    
-    }  
-    else if (myCenterY < 0) 
-    {     
-      myCenterY = 600;      
-    }
+    if(myCenterX >600){ myCenterX = 0;}  //if it goes off the screen then reset it
+    else if (myCenterX<0) {myCenterX = 600;}    
+    if(myCenterY >600) {myCenterY = 0;}  
+    else if (myCenterY < 0){myCenterY = 600;}
     timer++;
   }
   public void show()
@@ -236,52 +244,29 @@ class Propel extends Floater
 }
 public void keyPressed()
 {
-  if(key=='a')
-  {
-    left= true;
-  }
-  if(key=='d')
-  {
-    right = true;
-  }
-  if(key=='w')
-  {
-    up= true;
-    thrust=true;
-  }
-  if(key=='s')
-  {
-   down=true;
-  }
+  if(key=='a'){left= true;}
+  if(key=='d'){right = true;}
+  if(key=='w'){up= true;thrust=true;}
+  if(key=='s'){down=true;}
 }
 public void keyReleased()
-  {
-    if(key=='a')
-  {
-    left= false;
-  }
-  if(key=='d')
-  {
-    right = false;
-  }
-  if(key=='w')
-  {
-    up= false;
-    thrust =false;
-  }
-  if(key=='s')
-  {
-   down=false;
-  }
+{
+  if(key=='a'){left= false;}
+  if(key=='d'){right = false;}
+  if(key=='w'){up= false;thrust =false;}
+  if(key=='s'){down=false;}
     if(key == 'h')//hyperspace      
     {
-      flash=255;
-      spaceship.setDirectionX(0);
-      spaceship.setDirectionY(0);
-      spaceship.setX((int)((Math.random()*600)));
-      spaceship.setY((int)((Math.random()*600)));
-      spaceship.setPointDirection((int)((Math.random()*360)));
-      
+      if(hyperspaceCD == 0)
+      {
+        flash=255;
+        spaceship.setDirectionX(0);
+        spaceship.setDirectionY(0);
+        spaceship.setX((int)((Math.random()*600)));
+        spaceship.setY((int)((Math.random()*600)));
+        spaceship.setPointDirection((int)((Math.random()*360)));
+        hyperspaceCD=700;
+      }
     }
   }
 public void keyDo()
