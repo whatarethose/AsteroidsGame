@@ -7,16 +7,16 @@ boolean down=false;
 Stars []star;
 boolean thrust = false;
 Propel [] dots;
-Asteroids[] asteroid;
+ArrayList <Asteroids> makeAsteroid ;
 int flash = 255;
 float hyperspaceCD = 0;
 String hyperspaceReady;
 public void setup() 
 {
-  asteroid = new Asteroids[10];
-  for(int c=0;c<asteroid.length;c++)
+  makeAsteroid = new ArrayList <Asteroids>();
+  for(int c=0;c<10;c++)
   {
-    asteroid[c]=new Asteroids();
+    makeAsteroid.add(new Asteroids());
   }
   star = new Stars[50];
   for(int a=0;a<star.length;a++)
@@ -46,10 +46,10 @@ public void draw()
   {
     star[b].show();
   }
-  for(int c = 0;c<asteroid.length;c++)
+  for(Asteroids c: makeAsteroid)
   {
-    asteroid[c].show();
-    asteroid[c].move();
+    c.show();
+    c.move();
   }
   keyDo();
   if(flash>0)
