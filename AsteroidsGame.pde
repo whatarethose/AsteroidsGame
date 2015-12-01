@@ -6,7 +6,7 @@ boolean up = false;
 boolean down=false;
 Stars []star;
 boolean thrust = false;
-Propel [] dots;
+ArrayList <Propel> dots;
 ArrayList <Asteroids> makeAsteroid ;
 int flash = 255;
 float hyperspaceCD = 0;
@@ -23,11 +23,7 @@ public void setup()
   {
     star[a]= new Stars();
   } 
-  dots = new Propel[10];
-  for(int b =0;b<dots.length;b++)
-  {
-    dots[b]=new Propel();
-  }
+  dots = new ArrayList <Propel>();
   size(600,600);
   spaceship = new SpaceShip();
 }
@@ -35,16 +31,24 @@ public void setup()
 public void draw() 
 {
   background(flash);
-  for(int c=0;c<dots.length;c++)
+  if(up==true)
   {
-    dots[c].show();
-    dots[c].move();
+    dots.add(new Propel());
+  }
+  for(Propel c : dots)
+  {
+    c.show();
+    c.move();
+    // if(c.getColor()<10)
+    // {
+    //   dots.remove(c);
+    // }
   }
   spaceship.show();//your code here
   spaceship.move();
-   for(int b=0;b<star.length;b++)
+   for(Stars b : star)
   {
-    star[b].show();
+    b.show();
   }
   for(Asteroids c: makeAsteroid)
   {
@@ -230,7 +234,7 @@ class Propel extends Floater
     ellipse((int)(myCenterX),(int)(myCenterY),5,5);
     if(myColor>0)
     {
-      myColor-=5;
+      myColor-=15;
     }
     else if(myColor <10)
     {
