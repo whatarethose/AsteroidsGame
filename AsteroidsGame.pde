@@ -35,14 +35,14 @@ public void draw()
   {
     dots.add(new Propel());
   }
-  for(Propel c : dots)
+  for(int c = 0;c<dots.size();c++)
   {
-    c.show();
-    c.move();
-    // if(c.getColor()<10)
-    // {
-    //   dots.remove(c);
-    // }
+    dots.get(c).show();
+    dots.get(c).move();
+    if(dots.get(c).getColor()<10)
+    {
+      dots.remove(c);
+    }
   }
   spaceship.show();//your code here
   spaceship.move();
@@ -55,6 +55,18 @@ public void draw()
     c.show();
     c.move();
   }
+  for(int d =0; d < makeAsteroid.size();d++)
+  {
+    if(dist(spaceship.getX(),spaceship.getY(),
+      makeAsteroid.get(d).getX(),makeAsteroid.get(d).getY()) < 20)
+    {
+      makeAsteroid.remove(d); //REMOVES THE ASTEROID
+      d--;
+      shipCollision();
+      //asteroidsReset();
+    }
+  }
+
   keyDo();
   if(flash>0)
     { 
@@ -75,8 +87,31 @@ public void draw()
   }
   textSize(13);
   text("Hyperspace : " + hyperspaceReady, 10, 10);
-}
 
+}
+public void asteroidsReset()
+  {
+    for(int a =0;a<makeAsteroid.size();a++)
+    {
+      makeAsteroid.remove(a);
+      a--;
+    }
+    if(makeAsteroid.size()==0)
+    {
+        for(int c=0;c<(((int)Math.random()*20)-5);c++)
+        {
+          makeAsteroid.add(new Asteroids());
+        }
+    }
+  }
+public void shipCollision()
+  {
+    spaceship.setX(300);
+    spaceship.setY(300);
+    spaceship.setDirectionX(0);
+    spaceship.setDirectionY(0);
+    spaceship.setPointDirection((int)(Math.random() * 360));
+  }
 class Stars
   {
     private int myX,myY;
