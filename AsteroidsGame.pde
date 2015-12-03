@@ -63,7 +63,7 @@ public void draw()
       makeAsteroid.remove(d); //REMOVES THE ASTEROID
       d--;
       shipCollision();
-      //asteroidsReset();
+      asteroidsReset();
     }
   }
 
@@ -96,9 +96,9 @@ public void asteroidsReset()
       makeAsteroid.remove(a);
       a--;
     }
-    if(makeAsteroid.size()==0)
+    if(makeAsteroid.size()<1)
     {
-        for(int c=0;c<(((int)Math.random()*20)-5);c++)
+        for(int c=0;c<(int)(Math.random()*10)+10;c++)
         {
           makeAsteroid.add(new Asteroids());
         }
@@ -395,6 +395,7 @@ abstract class Floater //Do NOT modify the Floater class!
     {     
       myCenterY = height;    
     }   
+    
   }   
   public void show ()  //Draws the floater at the current position  
   {             
@@ -416,4 +417,3 @@ abstract class Floater //Do NOT modify the Floater class!
     endShape(CLOSE);  
   }   
 } 
-
