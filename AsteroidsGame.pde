@@ -4,6 +4,7 @@ boolean left = false;
 boolean right= false;
 boolean up = false;
 boolean down=false;
+boolean paused = false;
 Stars []star;
 boolean thrust = false;
 ArrayList <Propel> dots;
@@ -38,14 +39,20 @@ public void draw()
   for(int c = 0;c<dots.size();c++)
   {
     dots.get(c).show();
+    if(paused ==false)
+    {
     dots.get(c).move();
+    }
     if(dots.get(c).getColor()<10)
     {
       dots.remove(c);
     }
   }
   spaceship.show();//your code here
+  if(paused == false)
+  {
   spaceship.move();
+  }
    for(Stars b : star)
   {
     b.show();
@@ -53,7 +60,10 @@ public void draw()
   for(Asteroids c: makeAsteroid)
   {
     c.show();
+    if(paused == false)
+    {
     c.move();
+    }
   }
   for(int d =0; d < makeAsteroid.size();d++)
   {
@@ -64,6 +74,7 @@ public void draw()
       d--;
       shipCollision();
       asteroidsReset();
+      paused=true;
     }
   }
 
@@ -86,8 +97,13 @@ public void draw()
     hyperspaceReady="Ready"; 
   }
   textSize(13);
-  text("Hyperspace : " + hyperspaceReady, 10, 10);
-
+  fill(255);
+  text("Hyperspace : " + hyperspaceReady, 10, 15);
+  if(paused==true)
+  {
+    fill(255,0,0);
+    text("PAUSED, PRESSED P TO BEGIN", 400,15);
+  }
 }
 public void asteroidsReset()
   {
@@ -287,6 +303,7 @@ public void keyPressed()
   if(key=='d'){right = true;}
   if(key=='w'){up= true;thrust=true;}
   if(key=='s'){down=true;}
+  if(key=='p'){paused=!paused;}
 }
 public void keyReleased()
 {
