@@ -28,7 +28,6 @@ public void setup()
   size(600,600);
   spaceship = new SpaceShip();
 }
-
 public void draw() 
 {
   background(flash);
@@ -152,6 +151,10 @@ public int makeRanCor(int a)
   int temp = 0;
   temp=a+((int)(Math.random()*8)-4);
   return temp;
+}
+class Bullet extends Floater(SpaceShip theShip)
+{
+  
 }
 class Asteroids extends Floater
 {
