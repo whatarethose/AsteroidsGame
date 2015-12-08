@@ -12,8 +12,11 @@ ArrayList <Asteroids> makeAsteroid ;
 int flash = 255;
 float hyperspaceCD = 0;
 String hyperspaceReady;
+ArrayList <Bullet> bullets ;
 public void setup() 
 {
+  bullets = new ArrayList <Bullet>();
+  bullets.add(new Bullet(spaceship));
   makeAsteroid = new ArrayList <Asteroids>();
   for(int c=0;c<10;c++)
   {
@@ -31,6 +34,7 @@ public void setup()
 public void draw() 
 {
   background(flash);
+  bullets.get(0).show();
   if(up==true)
   {
     dots.add(new Propel());
@@ -152,9 +156,33 @@ public int makeRanCor(int a)
   temp=a+((int)(Math.random()*8)-4);
   return temp;
 }
-class Bullet extends Floater(SpaceShip theShip)
+class Bullet extends Floater
 {
-  
+  public Bullet(SpaceShip theShip)
+  {
+    myCenterX=theShip.getX();
+    myCenterY=theShip.getY();
+    myColor=255;
+    myPointDirection=theShip.getPointDirection();
+    double dRadians =myPointDirection*(Math.PI/180);
+    myDirectionX=5 * Math.cos(dRadians) + theShip.getDirectionX();
+    myDirectionY=5 * Math.cos(dRadians) + theShip.getDirectionY();
+  }
+  public void setX(int x){myCenterX=x;} 
+  public int getX(){return (int)myCenterX;}
+  public void setY(int y){myCenterY=y;}
+  public int getY(){return (int)myCenterY;}
+  public void setDirectionX(double x){myDirectionX=x;}
+  public double getDirectionX(){return myDirectionX;}
+  public void setDirectionY(double y){myDirectionY=y;}
+  public double getDirectionY(){return myDirectionY;}
+  public void setPointDirection(int degrees){myPointDirection=degrees;}
+  public double getPointDirection(){return myPointDirection;}
+  public void show()
+  {
+    fill(myColor);
+    ellipse((int)(myCenterX),(int)(myCenterY),5,5);
+  }
 }
 class Asteroids extends Floater
 {
