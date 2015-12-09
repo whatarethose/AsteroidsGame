@@ -13,10 +13,9 @@ int flash = 255;
 float hyperspaceCD = 0;
 String hyperspaceReady;
 ArrayList <Bullet> bullets ;
+int bulletTimer=0;
 public void setup() 
 {
-  bullets = new ArrayList <Bullet>();
-  bullets.add(new Bullet(spaceship));
   makeAsteroid = new ArrayList <Asteroids>();
   for(int c=0;c<10;c++)
   {
@@ -30,11 +29,12 @@ public void setup()
   dots = new ArrayList <Propel>();
   size(600,600);
   spaceship = new SpaceShip();
+  bullets = new ArrayList <Bullet>();
 }
 public void draw() 
 {
   background(flash);
-  bullets.get(0).show();
+  bulletTimer++;
   if(up==true)
   {
     dots.add(new Propel());
@@ -50,6 +50,30 @@ public void draw()
     {
       dots.remove(c);
     }
+  }
+  if(keyPressed == true)
+  {
+    if(key == ' ')
+    {
+      if(paused == false && bulletTimer%10 == 0)
+      {
+      bullets.add(new Bullet(spaceship));
+      bulletTimer=0;
+      }
+    }
+  }
+  for(int a =0;a<bullets.size();a++)
+  {
+    if(paused == false)
+    {
+      bullets.get(a).move();    
+    }
+      bullets.get(a).show();
+     // if(bullets.get(a).getX() > 600 || bullets.get(a).getX()<0 ||
+     //  bullets.get(a).getY() > 600 || bullets.get(a).getY()<0)
+     // {
+     //  bullets.remove(a);
+     // }doesnt work for stopping loop
   }
   spaceship.show();//your code here
   if(paused == false)
@@ -80,8 +104,22 @@ public void draw()
       paused=true;
     }
   }
-
-  keyDo();
+  for(int a = 0; a < makeAsteroid.size();a++)
+  {
+    for(int b = 0; b< bullets.size();b++)
+    {
+      if(dist(makeAsteroid.get(a).getX(),makeAsteroid.get(a).getY(),
+        bullets.get(b).getX(),bullets.get(b).getY())==0)
+      {
+        makeAsteroid.remove(a);
+        bullets.remove(b);
+      }
+    }
+  }
+  if(paused == false)
+  {
+    keyDo();
+  }
   if(flash>0)
     { 
       flash = flash - 2;
@@ -162,11 +200,11 @@ class Bullet extends Floater
   {
     myCenterX=theShip.getX();
     myCenterY=theShip.getY();
-    myColor=255;
+    myColor=125     ;
     myPointDirection=theShip.getPointDirection();
     double dRadians =myPointDirection*(Math.PI/180);
     myDirectionX=5 * Math.cos(dRadians) + theShip.getDirectionX();
-    myDirectionY=5 * Math.cos(dRadians) + theShip.getDirectionY();
+    myDirectionY=5 * Math.sin(dRadians) + theShip.getDirectionY();
   }
   public void setX(int x){myCenterX=x;} 
   public int getX(){return (int)myCenterX;}
@@ -180,7 +218,8 @@ class Bullet extends Floater
   public double getPointDirection(){return myPointDirection;}
   public void show()
   {
-    fill(myColor);
+    stroke(myColor,0,0);
+    fill(myColor,0,0);
     ellipse((int)(myCenterX),(int)(myCenterY),5,5);
   }
 }
@@ -384,6 +423,7 @@ public void keyDo()
       spaceship.setDirectionY(spaceship.getDirectionY()*.9);
     }
   }
+
 }  
 abstract class Floater //Do NOT modify the Floater class! 
 //Make changes in the SpaceShip class 
