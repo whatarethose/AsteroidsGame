@@ -55,7 +55,7 @@ public void draw()
   {
     if(key == ' ')
     {
-      if(paused == false && bulletTimer%10 == 0)
+      if(paused == false && bulletTimer%6 == 0)
       {
       bullets.add(new Bullet(spaceship));
       bulletTimer=0;
@@ -69,11 +69,6 @@ public void draw()
       bullets.get(a).move();    
     }
       bullets.get(a).show();
-     // if(bullets.get(a).getX() > 600 || bullets.get(a).getX()<0 ||
-     //  bullets.get(a).getY() > 600 || bullets.get(a).getY()<0)
-     // {
-     //  bullets.remove(a);
-     // }doesnt work for stopping loop
   }
   spaceship.show();//your code here
   if(paused == false)
@@ -109,10 +104,11 @@ public void draw()
     for(int b = 0; b< bullets.size();b++)
     {
       if(dist(makeAsteroid.get(a).getX(),makeAsteroid.get(a).getY(),
-        bullets.get(b).getX(),bullets.get(b).getY())==0)
+        bullets.get(b).getX(),bullets.get(b).getY())<20)
       {
         makeAsteroid.remove(a);
         bullets.remove(b);
+        break;
       }
     }
   }
@@ -145,6 +141,10 @@ public void draw()
     fill(255,0,0);
     text("PAUSED, PRESSED P TO BEGIN", 400,15);
   }
+  if(makeAsteroid.size()==0)
+  {
+    asteroidsReset();
+  }
 }
 public void asteroidsReset()
   {
@@ -159,6 +159,18 @@ public void asteroidsReset()
         {
           makeAsteroid.add(new Asteroids());
         }
+    }
+    for(int a = 0; a<bullets.size();a++)
+    {
+      bullets.remove(a);
+      if(a!=0)
+      {
+        a--;
+      }
+      else if(bullets.size()==1)
+      {
+        a=0;
+      }
     }
   }
 public void shipCollision()
@@ -220,8 +232,14 @@ class Bullet extends Floater
   {
     stroke(myColor,0,0);
     fill(myColor,0,0);
-    ellipse((int)(myCenterX),(int)(myCenterY),5,5);
+    ellipse((int)(myCenterX),(int)(myCenterY),7,7);
   }
+  public void move ()
+  {      
+    //change the x and y coordinates by myDirectionX and myDirectionY       
+    myCenterX += myDirectionX;    
+    myCenterY += myDirectionY;    
+    }  
 }
 class Asteroids extends Floater
 {
